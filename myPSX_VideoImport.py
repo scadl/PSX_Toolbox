@@ -2,21 +2,21 @@ import sys, os
 import Metashape
 
 from PySide2.QtCore import Qt
-from tkinter import *
 from PySide2.QtWidgets import *
 from PySide2.QtUiTools import QUiLoader
 
-def simple_qtPySide():
+def showMyBatchVideoImportDialog():
 
-    class MyWind(QDialog):
+    class myBatchVideoImport(QDialog):
 
         vidPath = ""
         vidStep = 10
+        vidStepType = 1
 
         def __init__(self,parent):
             QDialog.__init__(self, parent)
 
-            self.setWindowTitle("Batch Video Importer")
+            self.setWindowTitle("Batch Video Importer (by SCADl)")
             self.setGeometry(550, 550, 350, 110)
             self.setFixedSize(350, 110)
 
@@ -66,11 +66,13 @@ def simple_qtPySide():
             self.horizontalLayout_3.addWidget(self.label)
             # ComboBox for predifiend step type
             self.comboBox = QComboBox()
-            self.comboBox.addItem("")
-            self.comboBox.addItem("")
+            self.comboBox.addItem("Automatic Small")
+            self.comboBox.addItem("Automatic Medium")
+            self.comboBox.addItem("Automatic Large")
+            self.comboBox.addItem("Custom Step")
             self.comboBox.setObjectName(u"comboBox")
             self.comboBox.setEditable(False)
-            self.comboBox.setCurrentText(u"Elem1")
+            self.comboBox.setCurrentIndex(1)
             self.horizontalLayout_3.addWidget(self.comboBox)
             # The spinner itself. Used to set frame step
             self.spinBox = QSpinBox()
@@ -90,6 +92,7 @@ def simple_qtPySide():
             # The Button, runing the whole process. Nested into "Row" 2
             self.pushButton = QPushButton()
             self.pushButton.setObjectName(u"pushButton")
+            self.pushButton.setEnabled(False)
             sizePolicy.setHeightForWidth(self.pushButton.sizePolicy().hasHeightForWidth())
             gridLayout.addWidget(self.pushButton)
 
@@ -111,15 +114,25 @@ def simple_qtPySide():
             self.pushButton_10.clicked.connect(self.selPath)
             self.pushButton.clicked.connect(self.runAct)
             self.spinBox.valueChanged.connect(self.usrSetFrame)
+            self.comboBox.currentIndexChanged.connect(self.usrSetStepType)
 
             self.exec()
 
         def usrSetFrame(self, val):
-            print("Frame Step: "+str(val))
+
+            print("Frame Step Val: "+str(val))
             self.vidStep = val
+
+        def usrSetStepType(self, val):
+
+            print("Frame Step Type: "+str(val))
+            self.vidStepType = val
+            if (self.vidStepType==3):
+                self.spinBox.setEnabled(True)
 
 
         def selPath(self, type):
+
             openDialog = QFileDialog(parent, "Select your videos path", "")
             openDialog.setFileMode(QFileDialog.Directory)
             #openDialog.setNameFilter("Images (*.png *.xpm *.jpg);;Text files (*.txt);;XML files (*.xml)")
@@ -128,10 +141,11 @@ def simple_qtPySide():
                 myFolder = openDialog.selectedFiles()[0]
                 self.lineEdit.setText(myFolder)
                 self.vidPath = myFolder
+                self.pushButton.setEnabled(True)
                 print("Type "+str(type)+", Path:" + myFolder)         
             
-            
         def runAct(self):
+
             doc = Metashape.app.document;
             args = sys.argv;
 
@@ -143,26 +157,43 @@ def simple_qtPySide():
             print ("Finded files: ", str(files));
 
             for vid in files:
+
                 print("Processing file: ", vid);
+
                 chunk = doc.addChunk();
                 vid_lbl = vid.replace(".", "-");
                 chunk.label = vid_lbl;
                 save_frame = os.path.join(self.vidPath, "frames_"+vid_lbl);
+                frame_name = vid_lbl+"_{filenum}.png"
+
                 if (os.path.isdir(save_frame)==False):
                     os.mkdir(save_frame);
-                if (len(args) == 4):
+
+                if (self.vidStepType==0):                    
                     chunk.importVideo(
                         os.path.join(self.vidPath, vid), 
-                        os.path.join(save_frame, vid_lbl+"_{filenum}.png"), 
-                        Metashape.FrameStep.CustomFrameStep,
-                        int(self.vidStep)
-                )
-                else:
-                    chunk.importVideo(
-                        os.path.join(self.vidPath, vid), 
-                        os.path.join(save_frame, vid_lbl+"_{filenum}.png"), 
+                        os.path.join(save_frame, frame_name), 
                         Metashape.FrameStep.SmallFrameStep
                     )
+                elif (self.vidStepType==1):
+                    chunk.importVideo(
+                        os.path.join(self.vidPath, vid), 
+                        os.path.join(save_frame, frame_name), 
+                        Metashape.FrameStep.SmallFrameStep
+                    )
+                elif (self.vidStepType==2):
+                    chunk.importVideo(
+                        os.path.join(self.vidPath, vid), 
+                        os.path.join(save_frame, frame_name), 
+                        Metashape.FrameStep.SmallFrameStep
+                    )
+                elif (self.vidStepType==3):
+                    chunk.importVideo(
+                        os.path.join(self.vidPath, vid), 
+                        os.path.join(save_frame, frame_name), 
+                        Metashape.FrameStep.CustomFrameStep,
+                        int(self.vidStep)
+                    ) 
                 doc.save();
 
             Metashape.app.messageBox("All videos imported according plan")
@@ -172,14 +203,4 @@ def simple_qtPySide():
 
     app = QApplication.instance()
     parent = app.activeWindow()
-    MyWind(parent)
-
-def runUI():
-    app = QApplication.instance()
-    parent = app.activeWindow()
-    qload = QUiLoader(parent)
-    dialog = qload.load("untitled2.ui")
-
-
-label_path = "SCADl_Toolbox/Batch Video Import"
-Metashape.app.addMenuItem(label_path, simple_qtPySide)
+    myBatchVideoImport(parent)

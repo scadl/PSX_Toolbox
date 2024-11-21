@@ -60,7 +60,10 @@
         <bool>false</bool>
        </property>
        <property name="currentText">
-        <string notr="true">Elem1</string>
+        <string notr="true"/>
+       </property>
+       <property name="currentIndex">
+        <number>-1</number>
        </property>
        <item>
         <property name="text">
