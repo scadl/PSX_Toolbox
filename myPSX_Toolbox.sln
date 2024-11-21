@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35514.174 d17.12
+VisualStudioVersion = 17.12.35514.174
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "PythonApplication1", "PythonApplication1.pyproj", "{B933D964-85E9-4B23-8845-3F1990125FB7}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "myPSX_Toolbox_Plugin", "myPSX_Toolbox_Plugin.pyproj", "{B933D964-85E9-4B23-8845-3F1990125FB7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
