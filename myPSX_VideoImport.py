@@ -72,7 +72,7 @@ def showMyBatchVideoImportDialog():
             self.comboBox.addItem("Custom Step")
             self.comboBox.setObjectName(u"comboBox")
             self.comboBox.setEditable(False)
-            self.comboBox.setCurrentIndex(1)
+            self.comboBox.setCurrentIndex(0)
             self.horizontalLayout_3.addWidget(self.comboBox)
             # The spinner itself. Used to set frame step
             self.spinBox = QSpinBox()
