@@ -18,7 +18,7 @@ def showMyComponentProcessorDialog():
         def __init__(self,parent):
             QDialog.__init__(self, parent)
 
-            self.setWindowTitle(localizedStr.menu_item_1)
+            self.setWindowTitle(localizedStr.menu_item_3)
             self.setGeometry(550, 550, 250, 130)
             self.setFixedSize(350, 130)
 
@@ -74,7 +74,6 @@ def showMyComponentProcessorDialog():
             self.comboBox = QComboBox()
             self.comboBox.setObjectName(u"comboBox")
             self.comboBox.setEditable(False)
-            self.comboBox.setCurrentIndex(2)
             self.comboBox.currentIndexChanged.connect(self.setQual)
             hBoxLayout2.addWidget(self.comboBox)
 
@@ -114,6 +113,7 @@ def showMyComponentProcessorDialog():
             self.comboBox.addItem(localizedStr.compProcQaulItem[2])
             self.comboBox.addItem(localizedStr.compProcQaulItem[3])
             self.comboBox.addItem(localizedStr.compProcQaulItem[4])
+            self.comboBox.setCurrentIndex(2)
 
             self.startComp = doc.chunk.components[0].key
             self.endComp = doc.chunk.components[len(doc.chunk.components)-1].key

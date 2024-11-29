@@ -87,4 +87,3 @@ class MyPSX_Localizer:
             self.compProcQaulItem=["Ultra high","High","Medium","Low","Lowest"]
             self.compMarksOk="Keys succesfully added to all compnent names"
 
-

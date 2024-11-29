@@ -17,7 +17,7 @@ def showMyBatchVideoImportDialog():
         def __init__(self,parent):
             QDialog.__init__(self, parent)
 
-            self.setWindowTitle(localizedStr.menu_item_3)
+            self.setWindowTitle(localizedStr.menu_item_1)
             self.setGeometry(550, 550, 350, 110)
             self.setFixedSize(350, 110)
 
