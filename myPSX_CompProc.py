@@ -1,10 +1,12 @@
-from msilib.schema import CheckBox
+
 import sys, os
 import Metashape
+import myPSX_Localizer
 
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import *
 from PySide2.QtUiTools import QUiLoader
+
 
 def showMyComponentProcessorDialog():
     class myComponentProcessor(QDialog):
@@ -16,9 +18,9 @@ def showMyComponentProcessorDialog():
         def __init__(self,parent):
             QDialog.__init__(self, parent)
 
-            self.setWindowTitle("Batch Component Processor (by SCADl)")
-            self.setGeometry(550, 550, 250, 110)
-            self.setFixedSize(350, 110)
+            self.setWindowTitle(localizedStr.menu_item_1)
+            self.setGeometry(550, 550, 250, 130)
+            self.setFixedSize(350, 130)
 
             #Form Main Layout
             gridLayout = QGridLayout()
@@ -70,11 +72,6 @@ def showMyComponentProcessorDialog():
 
             # ComboBox for predifiend step type
             self.comboBox = QComboBox()
-            self.comboBox.addItem("Ultra high")
-            self.comboBox.addItem("High")
-            self.comboBox.addItem("Medium")
-            self.comboBox.addItem("Low")
-            self.comboBox.addItem("Lowest")
             self.comboBox.setObjectName(u"comboBox")
             self.comboBox.setEditable(False)
             self.comboBox.setCurrentIndex(2)
@@ -101,17 +98,22 @@ def showMyComponentProcessorDialog():
                 self.pushButton.setEnabled(False) 
                 self.spinBox_1.setEnabled(False)
                 self.spinBox_2.setEnabled(False)
-                Metashape.app.messageBox("No components in this chunk found!\nTry to align you photos again.")
+                Metashape.app.messageBox(localizedStr.emptyChunk_msg)
                 self.close()
             else:
                 self.pushButton.clicked.connect(self.runAct)
 
 
-            self.pushButton.setText(u"Start Processing")
-            self.label_1.setText(u"Process comp. with keys: ")
-            self.label_2.setText(u" to ")
-            self.label_3.setText(u"Quality: ")
-            self.checkBox.setText(u"Use network processing")
+            self.pushButton.setText(localizedStr.startCompProc)
+            self.label_1.setText(localizedStr.comProcLbl_1)
+            self.label_2.setText(localizedStr.comProcLbl_2)
+            self.label_3.setText(localizedStr.comProcLbl_Qual)
+            self.checkBox.setText(localizedStr.compProcUseNet)
+            self.comboBox.addItem(localizedStr.compProcQaulItem[0])
+            self.comboBox.addItem(localizedStr.compProcQaulItem[1])
+            self.comboBox.addItem(localizedStr.compProcQaulItem[2])
+            self.comboBox.addItem(localizedStr.compProcQaulItem[3])
+            self.comboBox.addItem(localizedStr.compProcQaulItem[4])
 
             self.startComp = doc.chunk.components[0].key
             self.endComp = doc.chunk.components[len(doc.chunk.components)-1].key
@@ -123,7 +125,7 @@ def showMyComponentProcessorDialog():
             self.spinBox_2.setMinimum(startKey)
             self.spinBox_2.setMaximum(endKey)
             self.spinBox_2.setValue(endKey)
-
+            
             #Aplying Global layout to form
             self.setLayout(gridLayout)
             self.exec()
@@ -197,19 +199,17 @@ def showMyComponentProcessorDialog():
                     print("Component Key - " +str(comp.key) + " not in diapazone")
 
             if(good == 0 and bad == 0):
-                Metashape.app.messageBox("No components proceseed...\n"+
-                                         "I\'ll run component key check for you\n"+
-                                         "Make sure you set right KEYS in processing diapazone!")
+                Metashape.app.messageBox(localizedStr.noComponents_msg)
                 updateCompNamesWKeys()
             else:
-                Metashape.app.messageBox("Processing done!"+
-                                     "\nCompnents built: "+str(good)+
-                                     "\nBroken components:"+str(bad))
+                Metashape.app.messageBox(localizedStr.finishedComp_msg.format(goodV=str(good),badV=str(bad)))
 
 
     app = QApplication.instance()
     parent = app.activeWindow()
+    localizedStr = myPSX_Localizer.MyPSX_Localizer()
     myComponentProcessor(parent)
+
 
 def updateCompNamesWKeys():
     app = QApplication.instance()
@@ -217,3 +217,5 @@ def updateCompNamesWKeys():
     chunk = doc.chunk;
     for comp in chunk.components:
         comp.label += " Key "+ str(comp.key)
+
+    Metashape.app.messageBox(localizedStr.compMarksOk)

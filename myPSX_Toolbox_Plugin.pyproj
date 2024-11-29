@@ -26,6 +26,7 @@
   <ItemGroup>
     <Compile Include="myPSX_CompProc.py" />
     <Compile Include="myPSX_Loader.py" />
+    <Compile Include="myPSX_Localizer.py" />
     <Compile Include="myPSX_UITester.py" />
     <Compile Include="myPSX_VideoImport.py" />
   </ItemGroup>

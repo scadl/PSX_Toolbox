@@ -1,1 +1,8 @@
-# scripts
+# myPSX Toolbox
+**[EN]** myPSX Toolbox - is a collection of my self written python scripts, for various automatization scenarios in Metashape. Each of them are controlled by a small UI from, implemented as QDialog. To use them, just run `myPSX_Loader` via *Tools > Run Script* (Ctrl + R) command, and you'll see a new menu "SCADl_Toolbox". From here, you can run my scripts, and adjust their launch parameters. 
+
+All the plugin UI fully translated to English and Russian language. The language are automatically selected, during script lunch, based on main Metashape interface language. If you changed the interface language after my script load, just rerun it with *Run Script* (Ctrl+R) command
+
+**[RU]** myPSX Toolbox — это набор написанных мной скриптов на Python для различных сценариев автоматизации обработки. Каждый из них управляется небольшим пользовательским интерфейсом, реализованным в виде QDialog. Чтобы пользовать ими, просто запустите `myPSX_Loader` с помощью команды *Инструменты > Выполнить скрипт* (Ctrl + R), и вы увидите новое меню «SCADl_Toolbox». Отсюда вы можете запускать мои скрипты и настраивать параметры их запуска.
+
+Весь пользовательский интерфейс плагина полностью переведен на английский и русский языки. Язык выбирается автоматически во время запуска скрипта на основе основного языка интерфейса Metashape. Если вы изменили язык интерфейса после загрузки моего скрипта, просто перезапустите скрипт-ланчер с помощью команды *Запустить скрипт* (Ctrl+R)

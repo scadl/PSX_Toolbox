@@ -1,6 +1,5 @@
 pip
-PySide2
-setuptools
-shiboken2
-Metashape
-Package
+PySide2==5.15.2.1
+setuptools==47.1.0
+shiboken2==5.15.2.1
+Metashape==Metashape-2.1.3

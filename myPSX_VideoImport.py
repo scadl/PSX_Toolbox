@@ -1,5 +1,6 @@
 import sys, os
 import Metashape
+import myPSX_Localizer
 
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import *
@@ -16,7 +17,7 @@ def showMyBatchVideoImportDialog():
         def __init__(self,parent):
             QDialog.__init__(self, parent)
 
-            self.setWindowTitle("Batch Video Importer (by SCADl)")
+            self.setWindowTitle(localizedStr.menu_item_3)
             self.setGeometry(550, 550, 350, 110)
             self.setFixedSize(350, 110)
 
@@ -66,10 +67,6 @@ def showMyBatchVideoImportDialog():
             self.horizontalLayout_3.addWidget(self.label)
             # ComboBox for predifiend step type
             self.comboBox = QComboBox()
-            self.comboBox.addItem("Automatic Small")
-            self.comboBox.addItem("Automatic Medium")
-            self.comboBox.addItem("Automatic Large")
-            self.comboBox.addItem("Custom Step")
             self.comboBox.setObjectName(u"comboBox")
             self.comboBox.setEditable(False)
             self.comboBox.setCurrentIndex(0)
@@ -105,10 +102,14 @@ def showMyBatchVideoImportDialog():
             self.setLayout(gridLayout)
             
             # Setting up all lables texts
-            self.pushButton.setText(u"Start Import")
-            self.label_1.setText(u"Path to videos for import")
-            self.pushButton_10.setText(u"...",)
-            self.label.setText(u"Frame Step")
+            self.label_1.setText(localizedStr.pathToVideo)
+            self.pushButton_10.setText(u"...")
+            self.label.setText(localizedStr.frameStepLbl)
+            self.comboBox.addItem(localizedStr.stepS[0])
+            self.comboBox.addItem(localizedStr.stepS[1])
+            self.comboBox.addItem(localizedStr.stepS[2])
+            self.comboBox.addItem(localizedStr.stepS[3])
+            self.pushButton.setText(localizedStr.startImportLbl)                     
 
             #Binding events to requred controls
             self.pushButton_10.clicked.connect(self.selPath)
@@ -120,7 +121,7 @@ def showMyBatchVideoImportDialog():
 
         def usrSetFrame(self, val):
 
-            print("Frame Step Val: "+str(val))
+            #print("Frame Step Val: "+str(val))
             self.vidStep = val
 
         def usrSetStepType(self, val):
@@ -196,11 +197,12 @@ def showMyBatchVideoImportDialog():
                     ) 
                 doc.save();
 
-            Metashape.app.messageBox("All videos imported according plan")
+            Metashape.app.messageBox(localizedStr.fi)
             doc.save()
             
             
 
     app = QApplication.instance()
     parent = app.activeWindow()
+    localizedStr = myPSX_Localizer.MyPSX_Localizer()
     myBatchVideoImport(parent)
