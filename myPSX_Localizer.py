@@ -1,4 +1,3 @@
-from calendar import c
 import Metashape
 
 class MyPSX_Localizer:
@@ -7,6 +6,7 @@ class MyPSX_Localizer:
     menu_item_2=""
     menu_item_3=""
     menu_item_4=""
+    menu_item_5=""
     about_msg=""
     emptyChunk_msg=""
     noComponents_msg=""
@@ -34,6 +34,7 @@ class MyPSX_Localizer:
             self.menu_item_2=u"Показать ключи компонентов"
             self.menu_item_3=u"Пакетный обработчик компонентов"
             self.menu_item_4=u"- Об этом плагине -"
+            self.menu_item_5=u"Модели из всех Облаков Точек"
             self.about_msg=("Этот плагин для Metasahpe 2.1.3 и pySide 2 разработан\n"+
                             "Карнаушенко Александром Дмитриевичем (scadl) в Ноябре 2024\n"+
                             "scad.luncher@gmail.com");
@@ -43,8 +44,8 @@ class MyPSX_Localizer:
                                    "Запускаю маркировку компонетов номерами ключей\n"+
                                    "Убедитесь, что вы выставили правильный диапазон КЛЮЧЕЙ!")
             self.finishedComp_msg=("Обработка завершена!\n"+
-                                  "Компонентов построено: {goodV}\n"+
-                                  "Битые компоненты (пропущены): {badV}")
+                                  "Построено: {goodV}\n"+
+                                  "Битые (пропущеные): {badV}")
             self.finishedVideoImp_msg="Все видео успешно импортированы"
             self.pathToVideo="Путь к папке с видео для импорта"
             self.frameStepLbl="Шаг импорта кадров"
@@ -63,6 +64,7 @@ class MyPSX_Localizer:
             self.menu_item_2=u"Show Component keys"
             self.menu_item_3=u"Batch Component Processor"
             self.menu_item_4=u"- About this plugin -"
+            self.menu_item_5=u"Meshes from all PointClouds"
             self.about_msg=("This plugin built for Metasahpe 2.1.3 and pySide 2 by\n"+
                             "Karnaushenko Alexander Dmitrievich (scadl) at November 2024\n"+
                             "scad.luncher@gmail.com");
@@ -72,8 +74,8 @@ class MyPSX_Localizer:
                                    "I\'ll run component key check for you\n"+
                                    "Make sure you set right KEYS in processing diapazone!")
             self.finishedComp_msg=("Processing done!\n"+
-                                  "Compnents built: {goodV}\n"+
-                                  "Broken components: {badV}")
+                                  "Succesfuly built: {goodV}\n"+
+                                  "Broken elements: {badV}")
             self.finishedVideoImp_msg="All videos succesfully imported!"
             self.pathToVideo="Path to videos for import"
             self.frameStepLbl="Frame Step"
