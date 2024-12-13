@@ -6,6 +6,12 @@ import myPSX_Localizer
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import *
 from PySide2.QtUiTools import QUiLoader
+from enum import Enum
+
+class procType(Enum):
+    PointCloudONLY = 1
+    TexturedMeshFromPontCloud = 2
+    TexturedMeshFromComponents = 3
 
 
 def showMyComponentProcessorDialog():
@@ -14,6 +20,7 @@ def showMyComponentProcessorDialog():
         qual = 4;
         startComp = 0;
         endComp = 0;
+        myProcType = procType;
 
         def __init__(self,parent):
             QDialog.__init__(self, parent)
@@ -85,13 +92,32 @@ def showMyComponentProcessorDialog():
             self.checkBox.setEnabled(False)
             gridLayout.addWidget(self.checkBox)
 
+            hBoxLayout3 = QHBoxLayout()
+            hBoxLayout3.setObjectName(u"horizontalLayout_3")
+
             # The Button, runing the whole process. Nested into "Row" 2
             self.pushButton = QPushButton()
             self.pushButton.setObjectName(u"pushButton")
             self.pushButton.setEnabled(True)
             #sizePolicy.setHeightForWidth(self.pushButton.sizePolicy().hasHeightForWidth())
             self.pushButton.setSizePolicy(sizePolicy)
-            gridLayout.addWidget(self.pushButton)
+            hBoxLayout3.addWidget(self.pushButton)
+
+            self.pushButton2 = QPushButton()
+            self.pushButton2.setObjectName(u"pushButton2")
+            self.pushButton2.setEnabled(True)
+            #sizePolicy.setHeightForWidth(self.pushButton.sizePolicy().hasHeightForWidth())
+            self.pushButton2.setSizePolicy(sizePolicy)
+            hBoxLayout3.addWidget(self.pushButton2)
+
+            self.pushButton3 = QPushButton()
+            self.pushButton3.setObjectName(u"pushButton3")
+            self.pushButton3.setEnabled(True)
+            #sizePolicy.setHeightForWidth(self.pushButton.sizePolicy().hasHeightForWidth())
+            self.pushButton3.setSizePolicy(sizePolicy)
+            hBoxLayout3.addWidget(self.pushButton3)
+
+            gridLayout.addLayout(hBoxLayout3, 6, 0, 1, 1);
 
             if (len(doc.chunk.components)<=0):
                 self.pushButton.setEnabled(False) 
@@ -101,6 +127,8 @@ def showMyComponentProcessorDialog():
                 self.close()
             else:
                 self.pushButton.clicked.connect(self.runAct)
+                self.pushButton2.clicked.connect(self.runAct)
+                self.pushButton3.clicked.connect(self.runAct)
 
 
             self.pushButton.setText(localizedStr.startCompProc)
@@ -197,6 +225,7 @@ def showMyComponentProcessorDialog():
                         bad += 1
                 else:
                     print("Component Key - " +str(comp.key) + " not in diapazone")
+                doc.save();
 
             if(good == 0 and bad == 0):
                 Metashape.app.messageBox(localizedStr.noComponents_msg)

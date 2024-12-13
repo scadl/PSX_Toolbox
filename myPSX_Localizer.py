@@ -7,6 +7,7 @@ class MyPSX_Localizer:
     menu_item_3=""
     menu_item_4=""
     menu_item_5=""
+    menu_item_6=""
     about_msg=""
     emptyChunk_msg=""
     noComponents_msg=""
@@ -34,7 +35,8 @@ class MyPSX_Localizer:
             self.menu_item_2=u"Показать ключи компонентов"
             self.menu_item_3=u"Пакетный обработчик компонентов"
             self.menu_item_4=u"- Об этом плагине -"
-            self.menu_item_5=u"Модели из всех Облаков Точек"
+            self.menu_item_5=u"Полигональные Модели из всех Облаков Точек"
+            self.menu_item_6=u"Полигональные Модели из всех Связывающих Точек"
             self.about_msg=("Этот плагин для Metasahpe 2.1.3 и pySide 2 разработан\n"+
                             "Карнаушенко Александром Дмитриевичем (scadl) в Ноябре 2024\n"+
                             "scad.luncher@gmail.com");
@@ -65,6 +67,7 @@ class MyPSX_Localizer:
             self.menu_item_3=u"Batch Component Processor"
             self.menu_item_4=u"- About this plugin -"
             self.menu_item_5=u"Meshes from all PointClouds"
+            self.menu_item_6=u"Meshes from all Components"
             self.about_msg=("This plugin built for Metasahpe 2.1.3 and pySide 2 by\n"+
                             "Karnaushenko Alexander Dmitrievich (scadl) at November 2024\n"+
                             "scad.luncher@gmail.com");
