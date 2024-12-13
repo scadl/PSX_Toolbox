@@ -110,13 +110,6 @@ def showMyComponentProcessorDialog():
             self.pushButton2.setSizePolicy(sizePolicy)
             hBoxLayout3.addWidget(self.pushButton2)
 
-            self.pushButton3 = QPushButton()
-            self.pushButton3.setObjectName(u"pushButton3")
-            self.pushButton3.setEnabled(True)
-            #sizePolicy.setHeightForWidth(self.pushButton.sizePolicy().hasHeightForWidth())
-            self.pushButton3.setSizePolicy(sizePolicy)
-            hBoxLayout3.addWidget(self.pushButton3)
-
             gridLayout.addLayout(hBoxLayout3, 6, 0, 1, 1);
 
             if (len(doc.chunk.components)<=0):
@@ -126,12 +119,12 @@ def showMyComponentProcessorDialog():
                 Metashape.app.messageBox(localizedStr.emptyChunk_msg)
                 self.close()
             else:
-                self.pushButton.clicked.connect(self.runAct)
-                self.pushButton2.clicked.connect(self.runAct)
-                self.pushButton3.clicked.connect(self.runAct)
+                self.pushButton.clicked.connect(self.runComp2PC)
+                self.pushButton2.clicked.connect(self.runComp2Mes)
 
 
             self.pushButton.setText(localizedStr.startCompProc)
+            self.pushButton2.setText(localizedStr.startCompProc2)
             self.label_1.setText(localizedStr.comProcLbl_1)
             self.label_2.setText(localizedStr.comProcLbl_2)
             self.label_3.setText(localizedStr.comProcLbl_Qual)
@@ -191,6 +184,18 @@ def showMyComponentProcessorDialog():
             #print("User end component: "+str(Val))
             self.endComp = val
 
+        def runComp2PC(self):
+            self.myProcType = procType.PointCloudONLY;
+            self.runAct()
+
+        def runComp2Mes(self):
+            self.myProcType = procType.TexturedMeshFromComponents
+            self.runAct()
+
+        def runPC2Mesh(self):
+            self.myProcType = procType.TexturedMeshFromPontCloud
+            self.runAct()
+
         def runAct(self):
 
             doc = Metashape.app.document;
@@ -216,10 +221,22 @@ def showMyComponentProcessorDialog():
                     chunk.component = comp
                     #(1- Ultra high, 2- High, 4- Medium, 8- Low, 16- Lowest
                     try:
-                        chunk.buildDepthMaps(2,Metashape.FilterMode.MildFiltering, chunk.cameras,False)
-                        chunk.buildPointCloud(Metashape.DataSource.DepthMapsData,True)
-                        chunk.point_cloud.label = "densePoints - "+comp.label+" key "+str(comp.key)
-                        good += 1
+
+                        if (self.myProcType == procType.PointCloudONLY):
+                            chunk.buildDepthMaps(self.qual,Metashape.FilterMode.MildFiltering, chunk.cameras,False)
+                            chunk.buildPointCloud(Metashape.DataSource.DepthMapsData,True)
+                            chunk.point_cloud.label = "PointCloud - "+comp.label
+                            good += 1
+
+                        if (self.myProcType == procType.TexturedMeshFromComponents):
+                            texSize = 2048;
+                            chunk.buildDepthMaps(self.qual, Metashape.FilterMode.MildFiltering, chunk.cameras, False)
+                            chunk.buildModel(Metashape.SurfaceType.Arbitrary, Metashape.Interpolation.DisabledInterpolation, Metashape.FaceCount.MediumFaceCount, 20000, Metashape.DataSource.DepthMapsData)
+                            chunk.buildUV(Metashape.MappingMode.GenericMapping, 1, texSize);
+                            chunk.buildTexture(Metashape.BlendingMode.AverageBlending, texSize)
+                            chunk.model.label = "Model - "+comp.label
+                            good += 1
+                        
                     except Exception as e:
                         print(">>> Error: " + str(e))
                         bad += 1

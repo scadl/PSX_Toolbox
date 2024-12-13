@@ -53,7 +53,8 @@ class MyPSX_Localizer:
             self.frameStepLbl="Шаг импорта кадров"
             self.startImportLbl="Выполнить импорт"
             self.stepS=["Автоматически: Малый","Автоматически: Средний","Автоматически: Большой","Свой шаг:"]
-            self.startCompProc="Запустить обработку \n(создать Плотное Облако Точек)"
+            self.startCompProc="Запустить обработку:\n Cоздать Плотные Облака Точек"
+            self.startCompProc2="Запустить обработку:\n Cоздать Текстурированые Модели"
             self.comProcLbl_1="Обработать комп. с КЛЮЧАМИ: "
             self.comProcLbl_2=" по "
             self.comProcLbl_Qual="Качество обработки: "
@@ -84,7 +85,8 @@ class MyPSX_Localizer:
             self.frameStepLbl="Frame Step"
             self.startImportLbl="Start Import"
             self.stepS=["Automatic Small","Automatic Medium","Automatic Large","Custom Step"]
-            self.startCompProc="Start Processing \n(build Dense Point Cloud)"
+            self.startCompProc="Start building\n Dense Point Clouds"
+            self.startCompProc2="Start building\n Textured Meshes"
             self.comProcLbl_1="Process comp. with keys: "
             self.comProcLbl_2=" to "
             self.comProcLbl_Qual="Processing quality: "
